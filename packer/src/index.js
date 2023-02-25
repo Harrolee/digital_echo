@@ -1,9 +1,10 @@
+
 const koa = require("koa");
 const path = require("path");
 const render = require("koa-ejs");
 const koaRouter = require("koa-router");
 const axios = require("axios");
-
+const {fromFile} = require("./SpeechRecognition")
 const app = new koa();
 const router = new koaRouter();
 const fs = require('fs');
@@ -14,8 +15,17 @@ render(app, {
     viewExt: "html",
 });
 
-router.get("hello", "/", (ctx) => {
-    ctx.body = "hello World";
+router.post("/", (ctx) => {
+    
+    console.log(ctx.request.body)
+    const wavUrl = audioFile
+    const buffer = Buffer.from(
+        wavUrl.split('base64,')[1],  // only use encoded data after "base64,"
+        'base64'
+    )
+    fs.writeFileSync('./audio.wav', buffer)
+    console.log(`wrote ${buffer.byteLength.toLocaleString()} bytes to file.`)
+    fromFile(audioFile)
 });
 
 router.get("users", "/users", async (ctx) => {

@@ -1,13 +1,27 @@
 const fs = require("fs");
 const sdk = require("microsoft-cognitiveservices-speech-sdk");
-const AudioFile = "../resources/i-just-want-to-get-out.wav"
+
+//const AudioFile = "../resources/i-just-want-to-get-out.wav"
 
 // This example requires environment variables named "SPEECH_KEY" and "SPEECH_REGION"
 const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.SPEECH_KEY, process.env.SPEECH_REGION);
 speechConfig.speechRecognitionLanguage = "en-US";
 
-function fromFile() {
-    let audioConfig = sdk.AudioConfig.fromWavFileInput(fs.readFileSync(AudioFile));
+// function saveFile(convertedFile) {
+//     //const audioFile = convertedFile.request.body
+//     console.log(convertedFile)
+//     const wavUrl = audioFile
+//     const buffer = Buffer.from(
+//         wavUrl.split('base64,')[1],  // only use encoded data after "base64,"
+//         'base64'
+//     )
+//     fs.writeFileSync('./audio.wav', buffer)
+//     console.log(`wrote ${buffer.byteLength.toLocaleString()} bytes to file.`)
+//     fromFile(audioFile)
+// }
+
+function fromFile(audioFile) {
+    let audioConfig = sdk.AudioConfig.fromWavFileInput(fs.readFileSync(audioFile));
     let speechRecognizer = new sdk.SpeechRecognizer(speechConfig, audioConfig);
 
     speechRecognizer.recognizeOnceAsync(result => {
@@ -32,4 +46,5 @@ function fromFile() {
         speechRecognizer.close();
     });
 }
-fromFile();
+
+module.exports.fromFile =  fromFile
