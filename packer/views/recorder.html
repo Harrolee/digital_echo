@@ -93,11 +93,11 @@
 
               try {
                 recording = new Blob(chunks, {
-                  type: "audio/wav; codecs=opus",
+                  type: "audio/ogg; codecs=opus",
                 });
               } catch (error) {
                 recording = new Blob(chunks, {
-                  type: "audio/wav; codecs=opus",
+                  type: "audio/ogg; codecs=opus",
                 });
               }
               chunks = [];

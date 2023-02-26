@@ -29,7 +29,7 @@ router.post("/transcribe", koaBody(), (ctx) => {
     wavBlob.split("base64,")[1], // only use encoded data after "base64,"
     "base64"
   );
-  const filePath = "audio.wav";
+  const filePath = "audio.ogg";
   fs.writeFileSync(filePath, buffer);
   console.log(`wrote ${buffer.byteLength.toLocaleString()} bytes to file.`);
   fromFile(filePath);
