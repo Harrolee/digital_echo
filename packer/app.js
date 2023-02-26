@@ -3,7 +3,7 @@ const path = require("path");
 const render = require("koa-ejs");
 const koaRouter = require("koa-router");
 const { koaBody } = require("koa-body");
-const { fromFile } = require("./SpeechRecognition");
+const { fromFile } = require("./scripts/SpeechRecognition");
 const app = new koa();
 const router = new koaRouter();
 const fs = require("fs");
@@ -21,9 +21,10 @@ router.get("/", (ctx) => {
 router.post("/transcribe", koaBody(), (ctx) => {
   console.log(ctx.request.body);
   ctx.body = JSON.stringify(ctx.request.body);
-  const wavUrl = ctx.body;
+  const wavBlob = ctx.body;
+  console.log(wavBlob);
   const buffer = Buffer.from(
-    wavUrl.split("base64,")[1], // only use encoded data after "base64,"
+    wavBlob.split("base64,")[1], // only use encoded data after "base64,"
     "base64"
   );
   const filePath = "audio.wav";
