@@ -19,10 +19,12 @@ router.get("/", (ctx) => {
 });
 
 router.post("/transcribe", koaBody(), (ctx) => {
-  console.log(ctx.request.body);
-  ctx.body = JSON.stringify(ctx.request.body);
-  const wavBlob = ctx.body;
+  // console.log(ctx.request.body);
+  // ctx.body = JSON.stringify(ctx.request.body);
+  const wavBlob = ctx.request.body;
   console.log(wavBlob);
+  const b64 = JSON.parse(wavBlob);
+  console.log(b64);
   const buffer = Buffer.from(
     wavBlob.split("base64,")[1], // only use encoded data after "base64,"
     "base64"
