@@ -30,6 +30,7 @@
     </section>
 
     <script>
+      // MediaTrackSettings.sample
       const audio = document.querySelector(".record");
       const stop = document.querySelector(".stop");
       const soundClips = document.querySelector(".sound-clips");
@@ -54,14 +55,16 @@
             const mediaRecorder = new MediaRecorder(stream, {
               audioBitsPerSecond: 16000,
             });
-            mediaRecorder.start();
-            console.log(mediaRecorder.state);
-            console.log("recorder started");
-
             let chunks = [];
 
-            mediaRecorder.ondataavailable = (e) => {
-              chunks.push(e.data);
+            audio.onclick = () => {
+              mediaRecorder.start();
+              console.log(mediaRecorder.state);
+              console.log("recorder started");
+
+              mediaRecorder.ondataavailable = (e) => {
+                chunks.push(e.data);
+              };
             };
 
             stop.onclick = () => {
@@ -71,8 +74,6 @@
             };
 
             mediaRecorder.onstop = (e) => {
-              console.log("recorder stopped");
-
               const clipName = prompt("Enter a name for your sound clip");
 
               const clipContainer = document.createElement("article");
